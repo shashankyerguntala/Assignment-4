@@ -14,13 +14,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         title: Padding(
           padding: const EdgeInsets.only(left: 24),
           child: Text('Notes', style: Constants().nunitoBold),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 12),
+            padding: const EdgeInsets.only(right: 21),
             child: GestureDetector(
               onTap: () => Navigator.push(
                 context,
@@ -30,14 +31,14 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.only(right: 24),
             child: Chips(icon: Icons.info_outline_rounded),
           ),
         ],
       ),
 
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24),
         child: Consumer<NoteProvider>(
           builder: (context, provider, child) {
             final notes = provider.notesList;

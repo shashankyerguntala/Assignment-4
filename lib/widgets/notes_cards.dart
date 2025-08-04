@@ -20,61 +20,92 @@ class _NotesCardsState extends State<NotesCards> {
   void showDeleteDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => Dialog(
         backgroundColor: const Color(0xFF1D1E33),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(
-          'Delete Note?',
-          style: Constants().nunitoMed.copyWith(color: Colors.white),
-        ),
-        content: Text(
-          'Are you sure you want to delete this note?',
-          style: Constants().nunitoMed.copyWith(color: Colors.white70),
-        ),
-        actionsAlignment: MainAxisAlignment.spaceEvenly,
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.info, size: 28, color: Colors.grey),
+              const SizedBox(height: 15),
+              Text(
+                'Are you sure you want to delete this note?',
+                style: Constants().nunitoMed.copyWith(
+                  color: Colors.white,
+                  fontSize: 23,
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
-            onPressed: () {
-              Navigator.pop(ctx);
-              setState(() {
-                isDeleteMode = false;
-              });
-            },
-            child: const Text('No', style: TextStyle(fontSize: 16)),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(48, 190, 113, 1),
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            onPressed: () {
-              widget.noteProvider.deleteNote(widget.note);
-              Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Note deleted successfully.',
-                    style: Constants().nunitoMed.copyWith(
-                      fontSize: 16,
-                      color: Colors.black,
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        setState(() {
+                          isDeleteMode = false;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF30BE71),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'Cancel',
+                        style: Constants().nunitoMed.copyWith(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-            child: const Text('Yes', style: TextStyle(fontSize: 16)),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        widget.noteProvider.deleteNote(widget.note);
+                        Navigator.pop(ctx);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Note deleted successfully.',
+                              style: Constants().nunitoMed.copyWith(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'Delete',
+                        style: Constants().nunitoMed.copyWith(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -117,7 +148,7 @@ class _NotesCardsState extends State<NotesCards> {
               ),
             ),
             if (isDeleteMode)
-              Positioned.fill(
+              Positioned(
                 child: Center(
                   child: IconButton(
                     icon: const Icon(
